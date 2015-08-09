@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MoviePlayer.View"
              xmlns:conv="clr-namespace:MoviePlayer.Converter"
+             xmlns:cm="clr-namespace:MoviePlayer.Common"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              DataContext="{Binding Movie, Source={StaticResource ResourceKey=Locator}}"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -17,7 +19,7 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
-        <Slider x:Name="slider1" Grid.Row="1" Margin="2,0" Value="{Binding MoviePos}" Maximum="{Binding MovieMax}" VerticalAlignment="Center"/>
+
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40"/>
@@ -39,6 +41,23 @@
             <Slider x:Name="slider2" Grid.Column="3" VerticalAlignment="Center" Value="{Binding VolumePos}"/>
         </Grid>
         <ContentControl Content="{Binding MovieObj}"/>
-
+        <Slider x:Name="slider1" Grid.Row="1" Margin="2,0" Value="{Binding MoviePos}" Maximum="{Binding MovieMax}" VerticalAlignment="Center" >
+            <i:Interaction.Behaviors>
+                <cm:SliderInfoBehavior x:Name="sliderInfoBehavior"
+                    ThumbToolTip="{Binding Path=., ElementName=thumbToolTip}"
+                    ThumbToolTipBlockBorder="{Binding Path=., ElementName=thumbToolTipBlockBorder}"
+                    ThumbToolTipBlock="{Binding Path=.,ElementName=thumbToolTipBlock}"
+                    ThumbMovie="{Binding Path=.,ElementName=thumbMovie}"
+                    />
+            </i:Interaction.Behaviors>
+        </Slider>
+        <Popup Name="thumbToolTip" AllowsTransparency="True" Placement="Relative"  PlacementTarget="{Binding ElementName=slider1}">
+            <Border Name="thumbToolTipBlockBorder" BorderBrush="Black" BorderThickness="1" Padding="2" Background="White">
+                <StackPanel>
+                    <MediaElement Name="thumbMovie" Width="100" Height="Auto" Source="{Binding MovieObj.Source}" ScrubbingEnabled="True" LoadedBehavior="Manual" Stretch="Uniform" Grid.RowSpan="2"/>
+                    <TextBlock Name="thumbToolTipBlock" Grid.Row="1" Text="{Binding ThumbPoint, ElementName=sliderInfoBehavior, Converter={StaticResource DobleToTimeConv}}" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </Border>
+        </Popup>
     </Grid>
 </UserControl>

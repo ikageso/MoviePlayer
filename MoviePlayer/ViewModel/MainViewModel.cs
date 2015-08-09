@@ -93,25 +93,28 @@ namespace MoviePlayer.ViewModel
                 if (_SelectFolderCommand == null)
                     _SelectFolderCommand = new RelayCommand(() =>
                     {
-                        var dlg = new Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog();
-                        dlg.Title = "作業フォルダの選択";
-                        dlg.IsFolderPicker = true;
-                        dlg.InitialDirectory = "C:";
+                        MovieList.MovieFolder = @"d:\home\Movies";
 
-                        dlg.AddToMostRecentlyUsedList = false;
-                        dlg.AllowNonFileSystemItems = false;
-                        dlg.DefaultDirectory = "C:";
-                        dlg.EnsureFileExists = true;
-                        dlg.EnsurePathExists = true;
-                        dlg.EnsureReadOnly = false;
-                        dlg.EnsureValidNames = true;
-                        dlg.Multiselect = false;
-                        dlg.ShowPlacesList = true;
 
-                        if (dlg.ShowDialog() == Microsoft.WindowsAPICodePack.Dialogs.CommonFileDialogResult.Ok)
-                        {
-                            MovieList.MovieFolder = dlg.FileName;
-                        }
+                        //var dlg = new Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog();
+                        //dlg.Title = "作業フォルダの選択";
+                        //dlg.IsFolderPicker = true;
+                        //dlg.InitialDirectory = "C:";
+
+                        //dlg.AddToMostRecentlyUsedList = false;
+                        //dlg.AllowNonFileSystemItems = false;
+                        //dlg.DefaultDirectory = "C:";
+                        //dlg.EnsureFileExists = true;
+                        //dlg.EnsurePathExists = true;
+                        //dlg.EnsureReadOnly = false;
+                        //dlg.EnsureValidNames = true;
+                        //dlg.Multiselect = false;
+                        //dlg.ShowPlacesList = true;
+
+                        //if (dlg.ShowDialog() == Microsoft.WindowsAPICodePack.Dialogs.CommonFileDialogResult.Ok)
+                        //{
+                        //    MovieList.MovieFolder = dlg.FileName;
+                        //}
 
                     });
 

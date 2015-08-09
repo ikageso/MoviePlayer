@@ -85,6 +85,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\Common.cs" />
     <Compile Include="Common\MovieChangeMessage.cs" />
+    <Compile Include="Common\SliderInfoBehavior.cs" />
     <Compile Include="Converter\DobleToTimeConverter.cs" />
     <Compile Include="Model\MovieFile.cs" />
     <Compile Include="Model\MovieFileList.cs" />
