@@ -1,0 +1,49 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MoviePlayer"
+        xmlns:View="clr-namespace:MoviePlayer.View" x:Class="MoviePlayer.MainWindow"
+        DataContext="{Binding Main, Source={StaticResource ResourceKey=Locator}}"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="513" Width="777">
+    <Window.Resources>
+        <DataTemplate x:Key="movieFileTemplate">
+            <View:MovieFileControl />
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="102*"/>
+            <ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="408*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ListView x:Name="listView" Grid.Row="1" ItemTemplate="{StaticResource movieFileTemplate}" ItemsSource="{Binding MovieList}" SelectedItem="{Binding SelectedItem}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Folder..." Margin="2" Command="{Binding SelectFolderCommand}"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="2">
+
+            <View:MovieControl />
+        </Grid>
+        <GridSplitter x:Name="gridSplitter" Grid.Column="1" HorizontalAlignment="Stretch"/>
+
+    </Grid>
+</Window>
