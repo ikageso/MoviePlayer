@@ -138,8 +138,7 @@ namespace MoviePlayer.ViewModel
         }
         #endregion
 
-        #region event
-
+        #region method
         /// <summary>
         /// MovieChange
         /// </summary>
@@ -172,6 +171,9 @@ namespace MoviePlayer.ViewModel
             MovieObj.Pause();
 
         }
+        #endregion
+
+        #region event
 
         /// <summary>
         /// MovieObj_MediaOpened

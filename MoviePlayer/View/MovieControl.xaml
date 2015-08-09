@@ -48,6 +48,7 @@
                     ThumbToolTipBlockBorder="{Binding Path=., ElementName=thumbToolTipBlockBorder}"
                     ThumbToolTipBlock="{Binding Path=.,ElementName=thumbToolTipBlock}"
                     ThumbMovie="{Binding Path=.,ElementName=thumbMovie}"
+                    Movie="{Binding Path=MovieObj}"
                     />
             </i:Interaction.Behaviors>
         </Slider>

@@ -52,11 +52,27 @@ namespace MoviePlayer.Common
             set { this.SetValue(ThumbPointProperty, value); }
         }
 
+        public static readonly DependencyProperty MovieProperty = DependencyProperty.Register("Movie", typeof(MediaElement), typeof(SliderInfoBehavior));
+        public MediaElement Movie
+        {
+            get { return (MediaElement)this.GetValue(MovieProperty); }
+            set { this.SetValue(MovieProperty, value); }
+        }
+
         protected override void OnAttached()
         {
             base.OnAttached();
             this.AssociatedObject.MouseMove += slider_MouseMove;
             this.AssociatedObject.MouseLeave += slider_MouseLeave;
+            this.AssociatedObject.PreviewMouseLeftButtonUp += slider_PreviewMouseLeftButtonUp;
+        }
+
+        private void slider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Movie == null || ThumbMovie == null)
+                return;
+
+            Movie.Position = ThumbMovie.Position;
         }
 
         protected override void OnDetaching()
@@ -64,40 +80,45 @@ namespace MoviePlayer.Common
             base.OnDetaching();
             this.AssociatedObject.MouseMove -= slider_MouseMove;
             this.AssociatedObject.MouseLeave -= slider_MouseLeave;
+            this.AssociatedObject.PreviewMouseLeftButtonUp -= slider_PreviewMouseLeftButtonUp;
+
 
         }
 
         private void slider_MouseMove(object sender, MouseEventArgs e)
         {
-            if (ThumbMovie == null)
-                return;
+            Dispatcher.BeginInvoke(new Action(() =>
+                {
+                if (ThumbMovie == null)
+                    return;
 
-            if (!ThumbToolTip.IsOpen) { ThumbToolTip.IsOpen = true; }
+                if (!ThumbToolTip.IsOpen) { ThumbToolTip.IsOpen = true; }
 
-            var slider = this.AssociatedObject;
+                var slider = this.AssociatedObject;
 
-            Point currentPos = e.GetPosition(slider);
-            Track _track = slider.Template.FindName("PART_Track", slider) as Track;
+                Point currentPos = e.GetPosition(slider);
+                Track _track = slider.Template.FindName("PART_Track", slider) as Track;
 
-            var value = _track.ValueFromPoint(currentPos);
-            var ts  = new TimeSpan(0, 0, 0, 0, (int)value);
+                var value = _track.ValueFromPoint(currentPos);
+                var ts = new TimeSpan(0, 0, 0, 0, (int)value);
 
-            if ((_OldTime - ts).Duration() > new TimeSpan(0, 0, 0, 1))
-            {
+                if ((_OldTime - ts).Duration() > new TimeSpan(0, 0, 0, 1))
+                {
 
-                _OldTime = ts;
+                    _OldTime = ts;
 
-                ThumbPoint = value;
+                    ThumbPoint = value;
 
-                //ThumbToolTipBlock.Text = ts.ToString();
-                ThumbMovie.Position = ts;
-                ThumbMovie.Play();
-                ThumbMovie.Pause();
+                    //ThumbToolTipBlock.Text = ts.ToString();
+                    ThumbMovie.Position = ts;
+                    ThumbMovie.Play();
+                    ThumbMovie.Pause();
 
-            }
+                }
 
-            ThumbToolTip.HorizontalOffset = currentPos.X - (ThumbToolTipBlockBorder.ActualWidth / 2);
-            ThumbToolTip.VerticalOffset = (ThumbMovie.ActualHeight + slider.ActualHeight) * -1 -5;
+                ThumbToolTip.HorizontalOffset = currentPos.X - (ThumbToolTipBlockBorder.ActualWidth / 2);
+                ThumbToolTip.VerticalOffset = (ThumbMovie.ActualHeight + slider.ActualHeight) * -1 - 5;
+            }));
         }
 
         private void slider_MouseLeave(object sender, MouseEventArgs e)
