@@ -45,20 +45,28 @@
             <i:Interaction.Behaviors>
                 <cm:SliderInfoBehavior x:Name="sliderInfoBehavior"
                     ThumbToolTip="{Binding Path=., ElementName=thumbToolTip}"
-                    ThumbToolTipBlockBorder="{Binding Path=., ElementName=thumbToolTipBlockBorder}"
-                    ThumbToolTipBlock="{Binding Path=.,ElementName=thumbToolTipBlock}"
-                    ThumbMovie="{Binding Path=.,ElementName=thumbMovie}"
+                    ThumbMovie="{Binding Path=ThumbMovieObj}"
+                    ThumbPoint="{Binding ThumbPoint, Mode=TwoWay}"
                     Movie="{Binding Path=MovieObj}"
                     />
             </i:Interaction.Behaviors>
         </Slider>
         <Popup Name="thumbToolTip" AllowsTransparency="True" Placement="Relative"  PlacementTarget="{Binding ElementName=slider1}">
-            <Border Name="thumbToolTipBlockBorder" BorderBrush="Black" BorderThickness="1" Padding="2" Background="White">
+            <local:ThumbnailMovieControl x:Name="thumbnailMovieControl">
+                <i:Interaction.Behaviors>
+                    <cm:ThumbnailMovieControlBehavior
+                        ThumbToolTip="{Binding Path=., ElementName=thumbToolTip}"
+                        ThumbPoint="{Binding ThumbPoint, Mode=TwoWay}"
+                        SliderPoint="{Binding Path=MoviePos, Mode=TwoWay}"
+                        />
+                </i:Interaction.Behaviors>
+            </local:ThumbnailMovieControl>
+            <!--<Border Name="thumbToolTipBlockBorder" BorderBrush="Black" BorderThickness="1" Padding="2" Background="White">
                 <StackPanel>
                     <MediaElement Name="thumbMovie" Width="100" Height="Auto" Source="{Binding MovieObj.Source}" ScrubbingEnabled="True" LoadedBehavior="Manual" Stretch="Uniform" Grid.RowSpan="2"/>
                     <TextBlock Name="thumbToolTipBlock" Grid.Row="1" Text="{Binding ThumbPoint, ElementName=sliderInfoBehavior, Converter={StaticResource DobleToTimeConv}}" HorizontalAlignment="Center"></TextBlock>
                 </StackPanel>
-            </Border>
+            </Border>-->
         </Popup>
     </Grid>
 </UserControl>

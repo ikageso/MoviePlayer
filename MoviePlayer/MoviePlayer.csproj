@@ -85,6 +85,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\Common.cs" />
     <Compile Include="Common\MovieChangeMessage.cs" />
+    <Compile Include="Common\ThumbnailMovieControlBehavior.cs" />
     <Compile Include="Common\SliderInfoBehavior.cs" />
     <Compile Include="Converter\DobleToTimeConverter.cs" />
     <Compile Include="Model\MovieFile.cs" />
@@ -98,6 +99,9 @@
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\MovieFileControl.xaml.cs">
       <DependentUpon>MovieFileControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ThumbnailMovieControl.xaml.cs">
+      <DependentUpon>ThumbnailMovieControl.xaml</DependentUpon>
     </Compile>
     <Page Include="View\MovieControl.xaml">
       <SubType>Designer</SubType>
@@ -118,6 +122,10 @@
     <Page Include="View\MovieFileControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ThumbnailMovieControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

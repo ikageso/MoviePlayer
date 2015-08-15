@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="MoviePlayer.View.ThumbnailMovieControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:MoviePlayer.Converter"
+             xmlns:local="clr-namespace:MoviePlayer.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <conv:DobleToTimeConverter x:Key="DobleToTimeConv"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid Name="movieGrid" Background="White">
+            <StackPanel>
+                <ContentControl Content="{Binding ThumbMovieObj}" Width="100" Height="Auto"  Grid.RowSpan="2" Margin="3,3,3,0"/>
+                <!--<MediaElement Name="thumbMovie" Width="100" Height="Auto" Source="{Binding ThumbMovieObj.Source}" ScrubbingEnabled="True" LoadedBehavior="Manual" Stretch="Uniform" Grid.RowSpan="2"/>-->
+                <TextBlock Name="thumbToolTipBlock" Grid.Row="1" Text="{Binding ThumbPoint, Converter={StaticResource DobleToTimeConv}}" HorizontalAlignment="Center"></TextBlock>
+            </StackPanel>
+            <Canvas>
+                <Line X1="0" Y1="{Binding ActualHeight, ElementName=movieGrid}" Stroke="Black" StrokeThickness="1.5"/>
+                <Line X1="{Binding ActualWidth, ElementName=movieGrid}" X2="{Binding ActualWidth, ElementName=movieGrid}" Y1="{Binding ActualHeight, ElementName=movieGrid}" Stroke="Black" StrokeThickness="1.5"/>
+                <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=movieGrid}" Y2="0" Stroke="Black" StrokeThickness="1.5"/>
+            </Canvas>
+        </Grid>
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Canvas HorizontalAlignment="Center" Grid.Column="1">
+                <Polyline Points="0 10, -10 0, 10 0, 0 10" Stroke="White" Fill="White" />
+                <Line X1="-10" Y1="0" X2="0" Y2="10" Stroke="Black"/>
+                <Line X1="10" Y1="0" X2="0" Y2="10" Stroke="Black"/>
+            </Canvas>
+            <Canvas Name="canvasLeft">
+                <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=canvasLeft}" Y2="0" Stroke="Black"/>
+            </Canvas>
+            <Canvas Grid.Column="2" Name="canvasRight">
+                <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=canvasRight}" Y2="0" Stroke="Black"/>
+            </Canvas>
+        </Grid>
+    </Grid>
+</UserControl>

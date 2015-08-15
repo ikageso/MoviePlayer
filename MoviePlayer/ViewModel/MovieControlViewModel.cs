@@ -42,7 +42,6 @@ namespace MoviePlayer.ViewModel
             }
         }
 
-
         private MediaElement _MovieObj;
         /// <summary>
         /// MediaElementObject
@@ -80,6 +79,23 @@ namespace MoviePlayer.ViewModel
                     TimeSpan ts = new TimeSpan(0, 0, 0, 0, (int)_MoviePos);
                     MovieObj.Position = ts;
                 }
+            }
+        }
+
+        private MediaElement _ThumbMovieObj;
+        /// <summary>
+        /// ThumbMovieObj
+        /// </summary>
+        public MediaElement ThumbMovieObj
+        {
+            get
+            {
+                return _ThumbMovieObj;
+            }
+            set
+            {
+                _ThumbMovieObj = value;
+                RaisePropertyChanged("ThumbMovieObj");
             }
         }
 
@@ -136,6 +152,24 @@ namespace MoviePlayer.ViewModel
                 RaisePropertyChanged("IsPlay");
             }
         }
+
+        private double _ThumbPoint;
+        /// <summary>
+        /// ThumbPoint
+        /// </summary>
+        public double ThumbPoint
+        {
+            get
+            {
+                return _ThumbPoint;
+            }
+            set
+            {
+                _ThumbPoint = value;
+                RaisePropertyChanged("ThumbPoint");
+            }
+        }
+
         #endregion
 
         #region method
@@ -169,6 +203,17 @@ namespace MoviePlayer.ViewModel
 
             MovieObj.Source = new Uri(Movie.FullPath);
             MovieObj.Pause();
+
+            // Popup Thumbnail
+            ThumbMovieObj = new MediaElement()
+            {
+                LoadedBehavior = MediaState.Manual,
+                ScrubbingEnabled = true,
+                Stretch = System.Windows.Media.Stretch.Uniform,
+            };
+
+            ThumbMovieObj.Source = new Uri(Movie.FullPath);
+            ThumbMovieObj.Pause();
 
         }
         #endregion
