@@ -75,17 +75,18 @@ namespace MoviePlayer.Model
                         var me = new MediaPlayer()
                         {
                             ScrubbingEnabled = true,
+                            Volume = 0
                         };
 
                         me.Open(new Uri(s.FullPath, UriKind.Absolute));
-                        //me.Source = new Uri(s.FileName);
-                        me.Pause();
 
                         // 読み込みが完了するまで待機
                         while (me.DownloadProgress < 1.0 && me.NaturalVideoWidth == 0)
                         {
                             Thread.Sleep(100);
                         }
+
+                        me.Pause();
 
                         double pos = me.NaturalDuration.TimeSpan.TotalMilliseconds / 2;
 
@@ -97,7 +98,7 @@ namespace MoviePlayer.Model
                         int width = (int)(me.NaturalVideoWidth * ratio);
                         int height = (int)(me.NaturalVideoHeight * ratio);
 
-                        // 描画用の Visual を用意
+                        // 描画用のVisual
                         var visual = new DrawingVisual();
 
                         using (var context = visual.RenderOpen())
@@ -105,10 +106,10 @@ namespace MoviePlayer.Model
                             context.DrawVideo(me, new System.Windows.Rect(0, 0, width, height));
                         }
 
-                        // レンダリングするビットマップを用意
+                        // レンダリングするビットマップ
                         var bitmap = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
 
-                        // ビットマップに Visual をレンダリング
+                        // レンダリング
                         bitmap.Render(visual);
 
                         var bitmapImage = new BitmapImage();
