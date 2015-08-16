@@ -9,4 +9,6 @@
 * .NET 4.5.2
 
 ### Features
+* WPF
 * MVVM light
+* MediaElement
