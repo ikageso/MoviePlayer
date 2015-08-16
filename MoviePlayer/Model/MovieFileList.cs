@@ -131,10 +131,7 @@ namespace MoviePlayer.Model
                     }
                     catch
                     {
-
                     }
-
-                    //}));
                 }
 
                 ////
